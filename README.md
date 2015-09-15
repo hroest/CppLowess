@@ -44,3 +44,9 @@ make
 ./testLowess
 ````
 
+
+Licence
+=======
+
+The code is available under the 3 clause BSD licence, see the LICENCE file
+
