@@ -1,4 +1,4 @@
-// 
+//
 // Copyright (c) 2015, Hannes Roest
 //
 // This software is released under a three-clause BSD license:
@@ -32,11 +32,11 @@
 #include <iostream>
 #include <assert.h>
 
-/// Minimal implementation of a template 
+/// Minimal implementation of a template
 class TestContainer
 {
 
-std::vector<double> data_;
+  std::vector<double> data_;
 /// Some other stuff may go here
 
 public:
@@ -44,7 +44,7 @@ public:
   typedef std::vector<double>::iterator iterator;
 
   TestContainer() {}
-  explicit TestContainer(int n) 
+  explicit TestContainer(int n)
   {
     data_.resize(n);
   }
@@ -54,15 +54,16 @@ public:
     return data_.size();
   }
 
-  inline double& operator[] (size_t n)
+  inline double& operator[](size_t n)
   {
     return data_[n];
   }
 
-  const inline double& operator[] (size_t n) const
+  const inline double& operator[](size_t n) const
   {
     return data_[n];
   }
+
   inline void push_back(double x)
   {
     return data_.push_back(x);
@@ -72,6 +73,7 @@ public:
   {
     return data_.begin();
   }
+
   inline std::vector<double>::iterator end()
   {
     return data_.end();
@@ -82,46 +84,55 @@ public:
 /*
 *        X values:
 *          1  2  3  4  5  (10)6  8  10  12  14  50
-* 
+*
 *        Y values:
 *           18  2  15  6  10  4  16  11  7  3  14  17  20  12  9  13  1  8  5  19
-* 
-* 
+*
+*
 *        YS values with F = .25, NSTEPS = 0, DELTA = 0.0
 *         13.659  11.145  8.701  9.722  10.000  (10)11.300  13.000  6.440  5.596
 *           5.456  18.998
-* 
+*
 *        YS values with F = .25, NSTEPS = 0 ,  DELTA = 3.0
 *          13.659  12.347  11.034  9.722  10.511  (10)11.300  13.000  6.440  5.596
 *            5.456  18.998
-* 
+*
 *        YS values with F = .25, NSTEPS = 2, DELTA = 0.0
 *          14.811  12.115  8.984  9.676  10.000  (10)11.346  13.000  6.734  5.744
 *            5.415  18.998
 */
 
-double xval[] = {1, 2, 3, 4, 5, 6,  6,  6,  6,  6,  6,  6,  6,  6,  6, 8, 10, 12, 14, 50 };
+double xval[] = {1, 2, 3, 4, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 8, 10, 12, 14, 50 };
 double yval[] = { 18, 2, 15, 6, 10, 4, 16, 11, 7, 3, 14, 17, 20, 12, 9, 13, 1, 8, 5, 19};
 
-double ys_1[] = { 13.659, 11.145, 8.701, 9.722, 10.000, 11.300, 11.300,
+double ys_1[] =
+{
+  13.659, 11.145, 8.701, 9.722, 10.000, 11.300, 11.300,
   11.300, 11.300, 11.300, 11.300, 11.300, 11.300, 11.300, 11.300, 13.000,
-  6.440, 5.596, 5.456, 18.998};
+  6.440, 5.596, 5.456, 18.998
+};
 
-double ys_2[] = {13.659, 12.347, 11.034, 9.722, 10.511, 11.300, 11.300,
+double ys_2[] =
+{
+  13.659, 12.347, 11.034, 9.722, 10.511, 11.300, 11.300,
   11.300, 11.300, 11.300, 11.300, 11.300, 11.300, 11.300, 11.300, 13.000,
-  6.440, 5.596, 5.456, 18.998};
+  6.440, 5.596, 5.456, 18.998
+};
 
-double ys_3[] = { 14.811, 12.115, 8.984, 9.676, 10.000, 11.346, 11.346,
+double ys_3[] =
+{
+  14.811, 12.115, 8.984, 9.676, 10.000, 11.346, 11.346,
   11.346, 11.346, 11.346, 11.346, 11.346, 11.346, 11.346, 11.346, 13.000,
-  6.734, 5.744, 5.415, 18.998};
+  6.734, 5.744, 5.415, 18.998
+};
 
 int main()
 {
 
-  CppLowess::TemplatedLowess< std::vector<double>, double > dlowess;
+  CppLowess::TemplatedLowess<std::vector<double>, double> dlowess;
   {
-    std::vector< double > v_xval;
-    std::vector< double > v_yval;
+    std::vector<double> v_xval;
+    std::vector<double> v_yval;
     for (size_t i = 0; i < 20; i++)
     {
       v_xval.push_back(xval[i]);
@@ -130,39 +141,39 @@ int main()
 
     // YS values with F = .25, NSTEPS = 0, DELTA = 0.0
     {
-      std::vector< double > out(20), tmp1(20), tmp2(20);
+      std::vector<double> out(20), tmp1(20), tmp2(20);
       dlowess.lowess(v_xval, v_yval, 0.25, 0, 0.0, out, tmp1, tmp2);
       for (size_t i = 0; i < 20; i++)
       {
-        assert( fabs(out[i] - ys_1[i]) / out[i] < 1e-4 );
+        assert(fabs(out[i] - ys_1[i]) / out[i] < 1e-4);
       }
     }
 
     // YS values with F = .25, NSTEPS = 0 ,  DELTA = 3.0
     {
-      std::vector< double > out(20), tmp1(20), tmp2(20);
+      std::vector<double> out(20), tmp1(20), tmp2(20);
       dlowess.lowess(v_xval, v_yval, 0.25, 0, 3.0, out, tmp1, tmp2);
       for (size_t i = 0; i < 20; i++)
       {
-        assert( fabs(out[i] - ys_2[i]) / out[i] < 1e-4 );
+        assert(fabs(out[i] - ys_2[i]) / out[i] < 1e-4);
       }
     }
 
     // YS values with F = .25, NSTEPS = 2, DELTA = 0.0
     {
-      std::vector< double > out(20), tmp1(20), tmp2(20);
+      std::vector<double> out(20), tmp1(20), tmp2(20);
       dlowess.lowess(v_xval, v_yval, 0.25, 2, 0.0, out, tmp1, tmp2);
       for (size_t i = 0; i < 20; i++)
       {
-        assert( fabs(out[i] - ys_3[i]) / out[i] < 1e-4 );
+        assert(fabs(out[i] - ys_3[i]) / out[i] < 1e-4);
       }
     }
   }
 
-  CppLowess::TemplatedLowess< std::vector<float>, float >  flowess;
+  CppLowess::TemplatedLowess<std::vector<float>, float>  flowess;
   {
-    std::vector< float > v_xval;
-    std::vector< float > v_yval;
+    std::vector<float> v_xval;
+    std::vector<float> v_yval;
     for (size_t i = 0; i < 20; i++)
     {
       v_xval.push_back((float)xval[i]);
@@ -171,36 +182,36 @@ int main()
 
     // YS values with F = .25, NSTEPS = 0, DELTA = 0.0
     {
-      std::vector< float > out(20), tmp1(20), tmp2(20);
+      std::vector<float> out(20), tmp1(20), tmp2(20);
       flowess.lowess(v_xval, v_yval, 0.25, 0, 0.0, out, tmp1, tmp2);
       for (size_t i = 0; i < 20; i++)
       {
-        assert( fabs(out[i] - ys_1[i]) / out[i] < 1e-4 );
+        assert(fabs(out[i] - ys_1[i]) / out[i] < 1e-4);
       }
     }
 
     // YS values with F = .25, NSTEPS = 0 ,  DELTA = 3.0
     {
-      std::vector< float > out(20), tmp1(20), tmp2(20);
+      std::vector<float> out(20), tmp1(20), tmp2(20);
       flowess.lowess(v_xval, v_yval, 0.25, 0, 3.0, out, tmp1, tmp2);
       for (size_t i = 0; i < 20; i++)
       {
-        assert( fabs(out[i] - ys_2[i]) / out[i] < 1e-4 );
+        assert(fabs(out[i] - ys_2[i]) / out[i] < 1e-4);
       }
     }
 
     // YS values with F = .25, NSTEPS = 2, DELTA = 0.0
     {
-      std::vector< float > out(20), tmp1(20), tmp2(20);
+      std::vector<float> out(20), tmp1(20), tmp2(20);
       flowess.lowess(v_xval, v_yval, 0.25, 2, 0.0, out, tmp1, tmp2);
       for (size_t i = 0; i < 20; i++)
       {
-        assert( fabs(out[i] - ys_3[i]) / out[i] < 1e-4 );
+        assert(fabs(out[i] - ys_3[i]) / out[i] < 1e-4);
       }
     }
   }
 
-  CppLowess::TemplatedLowess< TestContainer, double > testlowess;
+  CppLowess::TemplatedLowess<TestContainer, double> testlowess;
   {
 
     TestContainer v_xval;
@@ -218,7 +229,7 @@ int main()
       testlowess.lowess(v_xval, v_yval, 0.25, 0, 0.0, out, tmp1, tmp2);
       for (size_t i = 0; i < 20; i++)
       {
-        assert( fabs(out[i] - ys_1[i]) / out[i] < 1e-4 );
+        assert(fabs(out[i] - ys_1[i]) / out[i] < 1e-4);
       }
     }
 
@@ -228,7 +239,7 @@ int main()
       testlowess.lowess(v_xval, v_yval, 0.25, 0, 3.0, out, tmp1, tmp2);
       for (size_t i = 0; i < 20; i++)
       {
-        assert( fabs(out[i] - ys_2[i]) / out[i] < 1e-4 );
+        assert(fabs(out[i] - ys_2[i]) / out[i] < 1e-4);
       }
     }
 
@@ -238,7 +249,7 @@ int main()
       testlowess.lowess(v_xval, v_yval, 0.25, 2, 0.0, out, tmp1, tmp2);
       for (size_t i = 0; i < 20; i++)
       {
-        assert( fabs(out[i] - ys_3[i]) / out[i] < 1e-4 );
+        assert(fabs(out[i] - ys_3[i]) / out[i] < 1e-4);
       }
     }
   }
@@ -246,4 +257,3 @@ int main()
   std::cout << "All tests ran successfully" << std::endl;
 
 }
-
