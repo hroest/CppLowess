@@ -471,8 +471,9 @@ namespace CppLowess
       // ValueType cmad = 6.0 * median(resid_weights.begin(), resid_weights.end());
       // *********************************** 
 
-      size_t m1 = 1 + n / 2;
-      // ValueType m2 = n - m1 + 1;
+      size_t m1 = n / 2; // FORTRAN starts with one, CPP with zero
+      // size_t m1 = 1 + n / 2; // original FORTRAN code
+      // size_t m2 = n - m1 + 1; // see below, we don't explicitly sort but use max_element
 
       // Use nth element to find element m1, which produces a partially sorted
       // vector. This means we can get element m2 by looking for the maximum in the
