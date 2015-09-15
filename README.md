@@ -36,7 +36,7 @@ here, STL containers as well as compatible classes can be used as template argum
 Running tests
 =============
 
-To download the repo and run the tests, you can do
+To build and run the tests, you can do the following after download
 
 ````
 cmake .
