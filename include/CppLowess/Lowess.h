@@ -26,6 +26,8 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#ifndef CPPLOWESS_LOWESS_H
+#define CPPLOWESS_LOWESS_H
 
 #include <stdlib.h>
 #include <cmath>
@@ -164,7 +166,6 @@ namespace CppLowess
   template <typename ContainerType, typename ValueType>
   class TemplatedLowess
   {
-
     inline ValueType pow2(ValueType x) { return x * x;  }
     inline ValueType pow3(ValueType x) { return x * x * x;  }
 
@@ -217,7 +218,6 @@ namespace CppLowess
       // compute weights (pick up all ties on right)
       for (j = nleft; j < n; j++)
       {
-
         // Compute the distance measure, then apply the tricube
         // function on the distance to get the weight.
         // use_resid_weights will be False on the first iteration, then True
@@ -259,7 +259,6 @@ namespace CppLowess
       }
       else
       {
-
         // normalize weights (make sum of w[j] == 1)
         for (j = nleft; j <= nrt; j++)
         {
@@ -267,7 +266,6 @@ namespace CppLowess
         }
 
         return true;
-
       }
     }
 
@@ -507,7 +505,6 @@ namespace CppLowess
     }
 
 public:
-
     int lowess(const ContainerType& x,
                const ContainerType& y,
                double frac,    // parameter f
@@ -536,7 +533,6 @@ public:
       // robustness iterations
       for (int iter = 1; iter <= nsteps + 1; iter++)
       {
-
         // start of array in C++ at 0 / in FORTRAN at 1
         nleft = 0;
         nright = ns - 1;
@@ -568,7 +564,6 @@ public:
           // Update the last fit counter to indicate we've now fit this point.
           // Find the next i for which we'll run a regression.
           update_indices(x, n, delta, i, last, ys);
-
         }
         while (last < n - 1);
 
@@ -585,6 +580,7 @@ public:
       }
       return 0;
     }
-
   };
-}
+} // namespace CppLowess
+#endif //CPPLOWESS_LOWESS_H
+
